@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { userModel } = require('../../user/model/user.model');
 const { adminsModel } = require('../../admins/model/admins.model');  
 const { hashPassword } = require('../../../helpers/passwordHashing');
-const { generatePasswod } = require('../../../helpers/generatePassword');
 
 
 exports.login = async (req, res) => {
@@ -17,18 +16,25 @@ exports.login = async (req, res) => {
 
         else if (role === "user"){
             user = await userModel.findOne({ userName , role }).lean();
+            
+            if (!user) {
+                return res.status(401).json({
+                    message: "you should register first "
+                });
+            }
+
+            if(!user.isVerified){
+                return res.status(200).json({
+                    message : "you should verify your email first !"
+                })
+            }
+            
         }
 
         else{
             return res.status(401).json({
                 message : "Not Authorized !"
             })
-        }
-
-        if (!user) {
-            return res.status(401).json({
-                message: "you should register first "
-            });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
@@ -55,58 +61,10 @@ exports.login = async (req, res) => {
     };
 }
 
-exports.forgetPassword = async (req, res) => {
-    try {
-        const { email } = req.body;
-        let isFound = await userModel.findOne({ email }).lean().select("_id isVerified");
-
-        if (!isFound) {
-            return res.status(200).json({
-                message: "you do not have an account yet , please register first "
-            })
-        }
-
-        if (!isFound.isVerified) {
-            return res.status(200).json({
-                message: "you should verify your account first "
-            })
-        }
-
-        let newPassword = generatePasswod(); // get new password 
-        let result = await setUpMails(emailType = "resestPasswordMail", { email, newPassword })
-            .then(async (result) => {
-                if (result.statusCode == 400) {
-                    return res.status(400).json({
-                        message: "could not chang your password !"
-                    })
-                }
-                let hashedPassword = await hashPassword(newPassword); // hash it 
-                await userModel.updateOne({ email }, { password: hashedPassword });
-                return res.status(200).json({
-                    message: "success"
-                })
-            })
-    }
-    catch (err) {
-        return res.status(500).json({
-            message: "error",
-            err
-        });
-    }
-}
-
 exports.changePassword = async (req, res) => {
     try {
         const { oldPassword, password, confirmPassword } = req.body;
-
-        const userMail = req.user.email;
-        const user = await userModel.findOne({ email: userMail }).lean().select("email password userName");
-
-        if (!user) {
-            return res.status(400).json({
-                message: "there is no such user !"
-            })
-        }
+        const user = req.tmp[0]; 
 
         if (password != confirmPassword) {
             return res.status(400).json({
@@ -122,8 +80,13 @@ exports.changePassword = async (req, res) => {
         }
 
         let newPassword = await hashPassword(password);
-        await userModel.updateOne({ email: userMail, userName: user.userName }, { password: newPassword });
-        res.status(200).json({
+        if(user.role === "admin" || user.role === "superAdmin"){
+            await adminsModel.updateOne({ _id : user._id , userName: user.userName, role: user.role }, { password: newPassword });
+        }
+        else{
+            await userModel.updateOne({ _id :  user._id, userName: user.userName, role :  user.role }, { password: newPassword });
+        }
+        return res.status(200).json({
             message: "success"
         })
 
@@ -138,18 +101,25 @@ exports.changePassword = async (req, res) => {
 
 exports.editProfile = async (req, res) => {
     try {
-        const { userName, email, bussinesName, inventoryName, bussinesIndustry } = req.body;
+        const { userName, email } = req.body;
 
-        const userMail = req.user.email;
-        let user = await userModel.findOneAndUpdate({ email: userMail }, {userName, email, bussinesName, inventoryName, bussinesIndustry}).lean().select("email userName");
-
+        const user = req.tmp[0];
+      
         if (!user) {
             return res.status(400).json({
                 message: "you should register first !"
             })
         }
 
-        res.status(200).json({
+        if(user.role === "admin" || user.role === "superAdmin"){
+            await adminsModel.updateOne({ _id : user._id , role: user.role }, {  userName, email });
+        }
+        
+        else{
+            await userModel.updateOne({ _id :  user._id,  role :  user.role }, {  userName, email });
+        }
+
+        return res.status(200).json({
             message: "success"
         })
     }

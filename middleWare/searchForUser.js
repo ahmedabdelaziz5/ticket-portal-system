@@ -1,10 +1,14 @@
+const {adminsModel} = require('../modules/admins/model/admins.model');
+const {userModel} = require('../modules/user/model/user.model');
+
 module.exports = () => {
     return async (req, res, next) => {
         try {
             let {userName , userId , role} = req.user ; 
             let user ; 
+
             if(role === "admin" || role === "superAdmin"){
-                user = await adminsModel.findOne({userId, userName, role }).lean();
+                user = await adminsModel.find({_id : userId, userName, role }).lean();
             }
     
             else if (role === "user"){
@@ -22,8 +26,8 @@ module.exports = () => {
                     message : "there is no such user !"
                 })
             }
-            
-            next(user);
+            req.tmp = user ;
+            next();
         }
         catch (err) {
             res.status(500).json({

@@ -15,17 +15,11 @@ module.exports = {
                 "any.required" : "password is required"
             }),
 
-        })
-    },
-
-    forgetPasswordValid : {
-        body:Joi.object().required().keys({
-
-            email : Joi.string().required().email().messages({
-                "string.empty" : "email can not be empty",
-                "any.required" : "email is required"
+            role : Joi.string().required().messages({
+                "string.empty" : "role can not be empty",
+                "any.required" : "role is required"
             }),
-            
+
         })
     },
 
@@ -34,13 +28,7 @@ module.exports = {
 
             email : Joi.string().email(),
 
-            bussinesName : Joi.string(),
-
-            inventoryName : Joi.string(),
-
             userName : Joi.string(),
-
-            bussinesIndustry : Joi.string(),
 
         })
     },
