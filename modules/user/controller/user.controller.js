@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const { userModel } = require('../../user/model/user.model');
 const { ticketModel } = require('../../ticket/model/ticket.model');
 const { setUpMails } = require('../../../mailServices/verificationMail');
@@ -112,12 +113,15 @@ exports.sendTicket = async (req, res) => {
         const { customerFirstName, customerLastName, ticketContent } = req.body;
         const { userId, userName, email } = req.user;
 
+        const ticketId = new mongoose.Types.ObjectId();
         await ticketModel.create({
-            customerId: userId, customerFirstName, customerLastName,
+            _id: ticketId, customerId: userId, customerFirstName, customerLastName,
             customerUserName: userName, userEmail: email, ticketContent
         }).then(() => {
+            let final = `#${ ticketId.toString()}`;
             return res.status(200).json({
-                message: "success"
+                message: "success",
+                ticketId : final
             })
         })
 

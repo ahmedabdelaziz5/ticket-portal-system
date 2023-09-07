@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { userModel } = require('../../user/model/user.model');
-const { adminsModel } = require('../../admin/model/admins.model');  
+const { adminsModel } = require('../../admin/model/admins.model');
 const { hashPassword } = require('../../../helpers/passwordHashing');
 
 
@@ -9,32 +9,26 @@ exports.login = async (req, res) => {
     try {
         const { userName, password, role } = req.body;
 
-        let user ; 
-        if(role === "admin" || role === "superAdmin"){
-            user = await adminsModel.findOne({ userName , role }).lean();
+        let user;
+        if (role === "admin" || role === "superAdmin") {
+            user = await adminsModel.findOne({ userName, role }).lean();
         }
 
-        else if (role === "user"){
-            user = await userModel.findOne({ userName , role }).lean();
-            
-            if (!user) {
-                return res.status(401).json({
-                    message: "you should register first "
-                });
-            }
+        else if (role === "user") {
+            user = await userModel.findOne({ userName, role }).lean();
 
-            if(!user.isVerified){
+            if (!user.isVerified) {
                 return res.status(200).json({
-                    message : "you should verify your email first !"
+                    message: "you should verify your email first !"
                 })
             }
-            
+
         }
 
-        else{
+        if (!user) {
             return res.status(401).json({
-                message : "Not Authorized !"
-            })
+                message: "you should register first "
+            });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
@@ -44,7 +38,7 @@ exports.login = async (req, res) => {
             });
         }
 
-        let token = jwt.sign({ email: user.email, userName: user.userName, userId : user._id, role : user.role }, process.env.SECRET_TOKEN);
+        let token = jwt.sign({ email: user.email, userName: user.userName, userId: user._id, role: user.role }, process.env.SECRET_TOKEN);
         delete user.password;
         return res.status(200).json({
             message: "success",
@@ -54,6 +48,7 @@ exports.login = async (req, res) => {
 
     }
     catch (err) {
+        console.log(err);
         res.status(500).json({
             message: "error",
             err
@@ -64,7 +59,7 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
     try {
         const { oldPassword, password, confirmPassword } = req.body;
-        const user = req.tmp[0]; 
+        const user = req.tmp[0];
 
         if (password != confirmPassword) {
             return res.status(400).json({
@@ -80,11 +75,11 @@ exports.changePassword = async (req, res) => {
         }
 
         let newPassword = await hashPassword(password);
-        if(user.role === "admin" || user.role === "superAdmin"){
-            await adminsModel.updateOne({ _id : user._id , userName: user.userName, role: user.role }, { password: newPassword });
+        if (user.role === "admin" || user.role === "superAdmin") {
+            await adminsModel.updateOne({ _id: user._id, userName: user.userName, role: user.role }, { password: newPassword });
         }
-        else{
-            await userModel.updateOne({ _id :  user._id, userName: user.userName, role :  user.role }, { password: newPassword });
+        else {
+            await userModel.updateOne({ _id: user._id, userName: user.userName, role: user.role }, { password: newPassword });
         }
         return res.status(200).json({
             message: "success"
@@ -104,19 +99,19 @@ exports.editProfile = async (req, res) => {
         const { userName, email } = req.body;
 
         const user = req.tmp[0];
-      
+
         if (!user) {
             return res.status(400).json({
                 message: "you should register first !"
             })
         }
 
-        if(user.role === "admin" || user.role === "superAdmin"){
-            await adminsModel.updateOne({ _id : user._id , role: user.role }, {  userName, email });
+        if (user.role === "admin" || user.role === "superAdmin") {
+            await adminsModel.updateOne({ _id: user._id, role: user.role }, { userName, email });
         }
-        
-        else{
-            await userModel.updateOne({ _id :  user._id,  role :  user.role }, {  userName, email });
+
+        else {
+            await userModel.updateOne({ _id: user._id, role: user.role }, { userName, email });
         }
 
         return res.status(200).json({

@@ -1,4 +1,5 @@
-// function to send verification mail to new mails 
+// function to send email depends on type of mail it recives from controller 
+  
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
@@ -23,6 +24,16 @@ exports.setUpMails = async(emailType, emailCredentials) => {
     your new password is : "${emailCredentials.newPassword}" `
   }
 
+  else if (emailType === "ticketAnswer"){
+    mailOptions['subject'] = `update for ticket no : ${emailCredentials.ticketId}`;
+    mailOptions['text'] = `Dear Mr.${emailCredentials.userName} ,
+    
+your inquiry has been answered kindly check your account 
+
+regards.
+    `
+  }
+
   let result = await sendEmails(mailOptions);
   return result;
 
@@ -40,7 +51,7 @@ const sendEmails = async (mailOptions) => {
 
   let obj = {
     statusCode: 200,
-    message: "success and your email was sent !"
+    message: "success and email was sent !"
   };
   
   transporter.sendMail(mailOptions, function (error, info) {
