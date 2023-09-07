@@ -1,6 +1,6 @@
 const {
 
-    SEND_INQUIRY,
+    SEND_TICKET,
     GET_ALL_TICKETS,
 
 } = require("../../modules/user/endPoints");
@@ -8,7 +8,7 @@ const {
 
 module.exports = [
 
-    SEND_INQUIRY,
+    SEND_TICKET,
     GET_ALL_TICKETS,
 
 ];

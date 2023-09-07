@@ -15,9 +15,9 @@ connection();
 
 
 //routes
-app.use(require('./modules/common/route/common.route'));
-app.use(require('./modules/user/route/user.route'));
-
+app.use(require('./modules/common/route/common.route')); // common route
+app.use(require('./modules/user/route/user.route')); // user route
+app.use(require('./modules/admin/route/admin.route')); // admin route
 
 const http = require("http");
 const server = http.createServer(app);
@@ -28,4 +28,4 @@ server.listen(process.env.PORT || 3000, process.env.LOCAL_HOST || "0.0.0.0", () 
 })
 
 
-
+ 

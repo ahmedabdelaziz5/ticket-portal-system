@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 const { userModel } = require('../../user/model/user.model');
+const { ticketModel } = require('../../ticket/model/ticket.model');
 const { setUpMails } = require('../../../mailServices/verificationMail');
 const { hashPassword } = require('../../../helpers/passwordHashing');
-const {generatePasswod} = require('../../../helpers/generatePassword');
+const { generatePasswod } = require('../../../helpers/generatePassword');
 
 exports.signUp = async (req, res) => {
     try {
@@ -87,7 +88,7 @@ exports.forgetPassword = async (req, res) => {
             })
     }
     catch (err) {
-        console.log(err) ;
+        console.log(err);
         return res.status(500).json({
             message: "error",
             err
@@ -106,12 +107,27 @@ exports.verifyAccount = async (req, res) => {
     return res.send("your account was verified successfully !")
 }
 
-exports.sendIInquiry = async (req, res) => {
+exports.sendTicket = async (req, res) => {
+    try {
+        const { customerFirstName, customerLastName, ticketContent } = req.body;
+        const { userId, userName, email } = req.user;
 
+        await ticketModel.create({
+            customerId: userId, customerFirstName, customerLastName,
+            customerUserName: userName, userEmail: email, ticketContent
+        }).then(() => {
+            return res.status(200).json({
+                message: "success"
+            })
+        })
+
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "error",
+            err
+        })
+    }
 
 }
 
-exports.getAllTickets = async (req, res) => {
-
-
-}

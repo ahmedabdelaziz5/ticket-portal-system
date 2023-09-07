@@ -1,11 +1,11 @@
 // user endpoints 
 
-const SEND_INQUIRY = "user :  SEND_INQUIRY" ; 
+const SEND_TICKET = "user :  SEND_TICKET" ; 
 const GET_ALL_TICKETS = "user :  GET_ALL_TICKETS" ; 
 
 module.exports = {
     
-    SEND_INQUIRY,
+    SEND_TICKET,
     GET_ALL_TICKETS,
     
 }
