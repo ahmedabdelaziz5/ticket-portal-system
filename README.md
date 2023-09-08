@@ -55,11 +55,11 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/signUp|POST|allow you to create account 
-|/forgetPassword|POST|allow you to ask for a new password
-|/sendTicket|POST|allow you to send your inquiry to custimer service 
-|/getUserTickets|GET|allow you to get all your tickets 
-|/verifyAccount|GET|allow you to send a verification mail after creating account
+|/signUp|POST|allow customer to create an account 
+|/forgetPassword|POST|allow customer to ask for a new password
+|/sendTicket|POST|allow customer to send his inquiry to custimer service 
+|/getUserTickets|GET|allow customer to get all his tickets 
+|/verifyAccount|GET|allow customer to recive a verify his email after creating account
 
 
 # Admin module :
@@ -111,19 +111,31 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/searchForTicket/:ticketId|GET|allow you to serach for ticket with ticket ID 
-|/getAllActiveTickets|GET|allow you to get all active tickets in system 
-|/getAllClosedTickets|GET|allow you to get all closed tickets in system 
-|/sendAnswerOnTicket/:ticketId|PATCH|allow you to send answer on the ticket 
-|/deleteSpecificTicket/:ticketId|DELETE|allow you to delete a specific ticket  
+|/searchForTicket/:ticketId|GET|allow superAdmin to serach for ticket with ticket ID 
+|/getAllActiveTickets|GET|allow admins to get all active tickets in system 
+|/getAllClosedTickets|GET|allow superAdmin to get all closed tickets in system 
+|/sendAnswerOnTicket/:ticketId|PATCH|allow admin to send answer on the ticket 
+|/deleteSpecificTicket/:ticketId|DELETE|allow superAdmin to delete a specific ticket  
+
+
+# socket events :
+|EventName|linstenTo|Usage
+|-------:|-----:|-----
+|joinRoom|none|allow all admnis to be in the same room to hear events when one of them make any change to any ticket 
+|markTicketStatus|marked|allow admnin change status (closed or taken by one of admins) of any ticket 
+|markAsHighPriority|marked|allow superAdmin to mark this ticket as a high priority so that admins know that they needs to reply for it as fast as they can 
 
 
 
 
+# notes :
+#### you can find the roles in `enums folder`
 
+#### each module has a file named `endPoints` which has all the edPoints refers to this module 
 
+#### the authentication will be found in `rbac` folder which contains the policy of each role in the system
 
+#### all the services is full production using `onrender` cloud services
 
-#### note : all the services is full production using `onrender` cloud services
 #### you can run the project using the following command : `npm start`
 
