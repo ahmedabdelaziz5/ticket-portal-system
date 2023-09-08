@@ -119,7 +119,7 @@
 
 
 # socket events :
-|EventName|linstenTo|Usage
+|EventName|linstenOn|Usage
 |-------:|-----:|-----
 |joinRoom|none|allow all admnis to be in the same room to hear events when one of them make any change to any ticket 
 |markTicketStatus|marked|allow admnin change status (closed or taken by one of admins) of any ticket 
