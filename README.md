@@ -83,7 +83,37 @@
 |/getAllAdmins|GET|allow superAdmin to get all admins accounts  
 
 
+# Ticket module :
 
+#### Ticket schema : 
+
+```JavaScript
+{
+    customerId  : { type : mongoose.Types.ObjectId, required : true } , 
+    customerUserName : {type : String, required : true},
+    customerFirstName : {type : String, required : true},
+    customerLastName : {type : String, required : true},
+    userEmail : {type: String , required : true},
+    ticketContent  : { type : String, required : true } , 
+    ticketAnswers  : [{
+        answer : {type : String, required : true },
+    }] , 
+    isTaken : {type : Boolean, default : false},
+    ticketStatus : { type : String, required : true, default : "active"} , // ( active , closed )
+    isHighPriority  : { type : Boolean, default : false } , 
+}
+
+```
+
+#### Ticket endPoints : 
+
+|Endpoint|Method|Usage
+|-------:|-----:|-----
+|/searchForTicket/:ticketId|GET|allow you to serach for ticket with ticket ID 
+|/getAllActiveTickets|GET|allow you to get all active tickets in system 
+|/getAllClosedTickets|GET|allow you to get all closed tickets in system 
+|/sendAnswerOnTicket/:ticketId|PATCH|allow you to send answer on the ticket 
+|/deleteSpecificTicket/:ticketId|DELETE|allow you to delete a specific ticket  
 
 
 #### note : all the services is full production using `onrender` cloud services
