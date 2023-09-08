@@ -7,18 +7,17 @@ const {
 
 const {
 
-    REPLY_ON_TICKET,
-    CLOSE_TICKET,
+    CHANGE_TICKET_STATUS,
+    JOIN_ROOM
 
 } = require('../../modules/ticket/socketEvents')
 
 
 module.exports = [
 
-
     GET_ALL_ACTIVE_TICKETS,
     SEND_ANSWER_ON_TICKET,
-    REPLY_ON_TICKET,
-    CLOSE_TICKET,
+    CHANGE_TICKET_STATUS,
+    JOIN_ROOM
     
 ] ;

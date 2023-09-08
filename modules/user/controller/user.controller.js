@@ -118,10 +118,10 @@ exports.sendTicket = async (req, res) => {
             _id: ticketId, customerId: userId, customerFirstName, customerLastName,
             customerUserName: userName, userEmail: email, ticketContent
         }).then(() => {
-            let final = `#${ ticketId.toString()}`;
+            let final = `#${ticketId.toString()}`;
             return res.status(200).json({
                 message: "success",
-                ticketId : final
+                ticketId: final
             })
         })
 
@@ -133,5 +133,37 @@ exports.sendTicket = async (req, res) => {
         })
     }
 
+}
+
+exports.getUserTickets = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        let data = await ticketModel.find({ customerId: req.user.userId}).skip(skip).limit(limit).lean();
+        let totalNumOfItems = await ticketModel.countDocuments({ customerId: req.user.userId });
+
+        if (!data.length) {
+            return res.status(200).json({
+                message: "you have no tickets yet !"
+            })
+        }
+
+        return res.status(200).json({
+            message: "success",
+            data,
+            page,
+            numOfItems: data.length,
+            totalNumOfItems: totalNumOfItems,
+            numOfPages: Math.ceil(totalNumOfItems / limit)
+        })
+    }
+    catch (err) {
+        res.status(500).json({
+            message: "error",
+            err
+        })
+    }
 }
 

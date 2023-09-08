@@ -15,6 +15,11 @@ const {
 
 } = require('../../modules/ticket/endPoints') ;
 
+const {
+    MARK_AS_HIGH_PRIORITY,
+    JOIN_ROOM
+} = require('../../modules/ticket/socketEvents')
+
 
 module.exports = [
 
@@ -24,6 +29,8 @@ module.exports = [
     GET_ALL_ACTIVE_TICKETS,
     GET_ALL_CLOSED_TICKETS,
     DELETE_SPECIFIC_TICKET,
-    SEARCH_FOR_TICKET
+    SEARCH_FOR_TICKET,
+    MARK_AS_HIGH_PRIORITY,
+    JOIN_ROOM
     
 ] ;

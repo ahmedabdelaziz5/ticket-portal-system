@@ -10,10 +10,19 @@ const ticketSchema = new mongoose.Schema({
     ticketAnswers  : [{
         answer : {type : String, required : true },
     }] , 
-    ticketStatus : { type : String, required : true, default : "active"} , // ( open , closed )
+    isTaken : {type : Boolean, default : false},
+    ticketStatus : { type : String, required : true, default : "active"} , // ( active , closed )
     isHighPriority  : { type : Boolean, default : false } , 
 });
 
-exports.ticketModel = mongoose.model('ticket', ticketSchema) ;
+
+ticketSchema.index({customerId : -1 });
+ticketSchema.index( {ticketStatus : -1});
+
+const ticketModel = mongoose.model('ticket', ticketSchema) ;
+
+ticketModel.createIndexes(); 
+
+module.exports = {ticketModel} ;
 
 
