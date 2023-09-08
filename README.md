@@ -1,7 +1,5 @@
 # ticket-portal-system
 
-# inventory application : 
-
 #### This was my second task on my internship @Asterisc Technocrat 
 
 #### I used these technologies :
@@ -19,6 +17,8 @@
 
 
 #### Ticket Portal is to enhance customer service relationships, promote customer retention, and drive sales growth. By this system, businesses can streamline their support processes, provide efficient assistance to customers and optimize their overall customer service experience
+
+#### the term of inquiry has been mentioned as a ticket ( each inquiry is a ticket with a unique ID )
 
 # Modules ( REST APIs ) -> 
 
@@ -121,7 +121,7 @@
 # socket events :
 |EventName|linstenOn|Usage
 |-------:|-----:|-----
-|joinRoom|none|allow all admnis to be in the same room to hear events when one of them make any change to any ticket 
+|joinRoom|none|allow all admins to be in the same room to hear events when one of them make any change to any ticket 
 |markTicketStatus|marked|allow admnin change status (closed or taken by one of admins) of any ticket 
 |markAsHighPriority|marked|allow superAdmin to mark this ticket as a high priority so that admins know that they needs to reply for it as fast as they can 
 
