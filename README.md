@@ -20,6 +20,8 @@
 
 #### Ticket Portal is to enhance customer service relationships, promote customer retention, and drive sales growth. By this system, businesses can streamline their support processes, provide efficient assistance to customers and optimize their overall customer service experience
 
+# REST APIs : 
+
 # Common module :
 
 #### Common endPoints : 
@@ -114,6 +116,12 @@
 |/getAllClosedTickets|GET|allow you to get all closed tickets in system 
 |/sendAnswerOnTicket/:ticketId|PATCH|allow you to send answer on the ticket 
 |/deleteSpecificTicket/:ticketId|DELETE|allow you to delete a specific ticket  
+
+
+
+
+
+
 
 
 #### note : all the services is full production using `onrender` cloud services
