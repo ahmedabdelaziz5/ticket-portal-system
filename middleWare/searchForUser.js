@@ -8,11 +8,11 @@ module.exports = () => {
             let user ; 
 
             if(role === "admin" || role === "superAdmin"){
-                user = await adminsModel.find({_id : userId, userName, role }).lean();
+                user = await adminsModel.findOne({_id : userId, userName, role }).lean();
             }
     
             else if (role === "user"){
-                user = await userModel.findOne({userId, userName, role }).lean();
+                user = await userModel.findOne({_id : userId, userName, role }).lean();
             }
     
             else{
