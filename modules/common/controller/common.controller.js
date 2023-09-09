@@ -17,7 +17,7 @@ exports.login = async (req, res) => {
         else if (role === "user") {
             user = await userModel.findOne({ userName, role }).lean();
 
-            if (!user.isVerified) {
+            if ( user && !user.isVerified) {
                 return res.status(200).json({
                     message: "you should verify your email first !"
                 })
