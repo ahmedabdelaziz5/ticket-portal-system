@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
     try {
         const { oldPassword, password, confirmPassword } = req.body;
-        const user = req.tmp[0];
+        const user = req.tmp;
 
         if (password != confirmPassword) {
             return res.status(400).json({
@@ -97,8 +97,8 @@ exports.changePassword = async (req, res) => {
 exports.editProfile = async (req, res) => {
     try {
         const { userName, email } = req.body;
-
-        const user = req.tmp[0];
+ 
+        const user = req.tmp;
 
         if (!user) {
             return res.status(400).json({
