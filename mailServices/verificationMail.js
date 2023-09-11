@@ -25,7 +25,7 @@ exports.setUpMails = async(emailType, emailCredentials) => {
   }
 
   else if (emailType === "ticketAnswer"){
-    mailOptions['subject'] = `update for ticket ID : ${emailCredentials.ticketId}`;
+    mailOptions['subject'] = `update for ticket ID : #${emailCredentials.ticketId}`;
     mailOptions['text'] = `Dear Mr.${emailCredentials.userName} ,
     
 your inquiry has been answered kindly check your account 

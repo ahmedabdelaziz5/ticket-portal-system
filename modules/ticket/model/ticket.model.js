@@ -13,6 +13,7 @@ const ticketSchema = new mongoose.Schema({
     isTaken : {type : Boolean, default : false},
     ticketStatus : { type : String, required : true, default : "active"} , // ( active , closed )
     isHighPriority  : { type : Boolean, default : false } , 
+    createdAt : {type : Date , required : true} ,
 });
 
 

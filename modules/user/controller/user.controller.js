@@ -46,7 +46,6 @@ exports.signUp = async (req, res) => {
     }
 
     catch (err) {
-        console.log(err);
         res.status(500).json({
             message: "error",
             err
@@ -116,12 +115,11 @@ exports.sendTicket = async (req, res) => {
         const ticketId = new mongoose.Types.ObjectId();
         await ticketModel.create({
             _id: ticketId, customerId: userId, customerFirstName, customerLastName,
-            customerUserName: userName, userEmail: email, ticketContent
+            customerUserName: userName, userEmail: email, ticketContent, createdAt : Date.now()
         }).then(() => {
-            let final = `#${ticketId.toString()}`;
             return res.status(200).json({
                 message: "success",
-                ticketId: final
+                ticketId 
             })
         })
 
@@ -141,7 +139,7 @@ exports.getUserTickets = async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        let data = await ticketModel.find({ customerId: req.user.userId}).skip(skip).limit(limit).lean();
+        let data = await ticketModel.find({ customerId: req.user.userId}).sort({createdAt : -1}).skip(skip).limit(limit).lean();
         let totalNumOfItems = await ticketModel.countDocuments({ customerId: req.user.userId });
 
         if (!data.length) {

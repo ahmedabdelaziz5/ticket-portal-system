@@ -9,7 +9,7 @@ exports.getAllActiveTickets = async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        let data = await ticketModel.find({ ticketStatus: "active" }).skip(skip).limit(limit).lean();
+        let data = await ticketModel.find({ ticketStatus: "active" }).sort({createdAt : -1 }).skip(skip).limit(limit).lean();
         let totalNumOfItems = await ticketModel.countDocuments({ ticketStatus: "active" });
 
         if (!data.length) {
@@ -41,7 +41,7 @@ exports.getAllClosedTickets = async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        let data = await ticketModel.find({ ticketStatus: "closed" }).skip(skip).limit(limit).lean();
+        let data = await ticketModel.find({ ticketStatus: "closed" }).sort({createdAt : -1}).skip(skip).limit(limit).lean();
         let totalNumOfItems = await ticketModel.countDocuments({ ticketStatus: "closed" });
 
         if (!data.length) {

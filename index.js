@@ -19,7 +19,7 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Authorization', 'Content-Type'],
 };
-
+ 
 //routes
 app.use(require('./modules/common/route/common.route')); // common route
 app.use(require('./modules/user/route/user.route')); // user route
