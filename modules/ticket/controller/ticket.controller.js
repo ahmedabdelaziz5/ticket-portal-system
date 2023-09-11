@@ -140,7 +140,7 @@ exports.sendAnswerOnTicket = async (req, res) => {
             })
         }
         const queryFilter = '_id customerFirstName userEmail';
-        let ticket = await ticketModel.findOneAndUpdate({_id : ticketId}, {$push : {ticketAnswers : {answer}}}).select(queryFilter).lean();
+        let ticket = await ticketModel.findOneAndUpdate({_id : ticketId}, {$push : {ticketAnswers : {answer, createdAt : Date.now() }}}).select(queryFilter).lean();
 
         if(!ticket){
             return res.status(400).json({
@@ -162,4 +162,5 @@ exports.sendAnswerOnTicket = async (req, res) => {
         })
     }
 }
+
 

@@ -9,6 +9,7 @@ const ticketSchema = new mongoose.Schema({
     ticketContent  : { type : String, required : true } , 
     ticketAnswers  : [{
         answer : {type : String, required : true },
+        createdAt : {type : Date, required : true },
     }] , 
     isTaken : {type : Boolean, default : false},
     ticketStatus : { type : String, required : true, default : "active"} , // ( active , closed )
