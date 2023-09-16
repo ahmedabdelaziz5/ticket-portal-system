@@ -30,9 +30,9 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/login|POST|allow you to sign in your account
-|/editProfile|PATCH|allow you to edit/update youe prodile data
-|/changePassword|PATCH|allow you to update/change your password
+|/login|POST|allows you to sign in your account
+|/editProfile|PATCH|allows you to edit/update youe prodile data
+|/changePassword|PATCH|allows you to update/change your password
 
 
 # User module :
@@ -57,11 +57,11 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/signUp|POST|allow customer to create an account 
-|/forgetPassword|POST|allow customer to ask for a new password
-|/sendTicket|POST|allow customer to send his inquiry to custimer service 
-|/getUserTickets|GET|allow customer to get all his tickets 
-|/verifyAccount|GET|allow customer to recive a verify his email after creating account
+|/signUp|POST|allows customer to create an account 
+|/forgetPassword|POST|allows customer to ask for a new password
+|/sendTicket|POST|allows customer to send his inquiry to custimer service 
+|/getUserTickets|GET|allows customer to get all his tickets 
+|/verifyAccount|GET|allows customer to recive a verify his email after creating account
 
 
 # Admin module :
@@ -82,9 +82,9 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/createAdmin|POST|allow superAdmin to create admins accounts 
-|/deleteAdmin|DELETE|allow superAdmin to delete admins accounts  
-|/getAllAdmins|GET|allow superAdmin to get all admins accounts  
+|/createAdmin|POST|allows superAdmin to create admins accounts 
+|/deleteAdmin|DELETE|allows superAdmin to delete admins accounts  
+|/getAllAdmins|GET|allows superAdmin to get all admins accounts  
 
 
 # Ticket module :
@@ -113,19 +113,19 @@
 
 |Endpoint|Method|Usage
 |-------:|-----:|-----
-|/searchForTicket/:ticketId|GET|allow superAdmin to serach for ticket with ticket ID 
-|/getAllActiveTickets|GET|allow admins to get all active tickets in system 
-|/getAllClosedTickets|GET|allow superAdmin to get all closed tickets in system 
-|/sendAnswerOnTicket/:ticketId|PATCH|allow admin to send answer on the ticket 
-|/deleteSpecificTicket/:ticketId|DELETE|allow superAdmin to delete a specific ticket  
+|/searchForTicket/:ticketId|GET|allows superAdmin to serach for ticket with ticket ID 
+|/getAllActiveTickets|GET|allows admins to get all active tickets in system 
+|/getAllClosedTickets|GET|allows superAdmin to get all closed tickets in system 
+|/sendAnswerOnTicket/:ticketId|PATCH|allows admin to send answer on the ticket 
+|/deleteSpecificTicket/:ticketId|DELETE|allows superAdmin to delete a specific ticket  
 
 
 # socket events :
 |EventName|linstenOn|Usage
 |-------:|-----:|-----
-|joinRoom|none|allow all admins to be in the same room to hear events when one of them make any change to any ticket 
-|markTicketStatus|marked|allow admnin change status (closed or taken by one of admins) of any ticket 
-|markAsHighPriority|marked|allow superAdmin to mark this ticket as a high priority so that admins know that they needs to reply for it as fast as they can 
+|joinRoom|none|allows all admins to be in the same room to hear events when one of them make any change to any ticket 
+|markTicketStatus|marked|allows admnin change status (closed or taken by one of admins) of any ticket 
+|markAsHighPriority|marked|allows superAdmin to mark this ticket as a high priority so that admins know that they needs to reply for it as fast as they can 
 
 
 
