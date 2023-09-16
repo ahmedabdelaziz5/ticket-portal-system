@@ -14,6 +14,8 @@
 ![Static Badge](https://img.shields.io/badge/3.0.1-nodemon-09c)
 ![Static Badge](https://img.shields.io/badge/socket.io-4.7.2-03E)
 ![Static Badge](https://img.shields.io/badge/easy_rbac-3.2.0-08A)
+![Static Badge](https://img.shields.io/badge/cors-2.8.5-0f3)
+
 
 
 #### Ticket Portal is to enhance customer service relationships, promote customer retention, and drive sales growth. By this system, businesses can streamline their support processes, provide efficient assistance to customers and optimize their overall customer service experience
@@ -139,3 +141,4 @@
 
 #### you can run the project using the following command : `npm start`
 
+#### all get request has a pagination you can send page ( default = 1 ) and limit default = 10 ) in the URL 
